@@ -117,3 +117,104 @@ add_action( 'wp_enqueue_scripts',  function(){
 	wp_enqueue_style( 'josh-bootstrap', plugin_dir_url( __FILE__ ) . 'grid.min.css' );
 });
 
+/**
+ * Inline styles
+ */
+add_action( 'wp_head', function() {
+	$key = md5( __FUNCTION__ . __FILE__ );
+	if( false == ( $styles = get_transient( $key ) ) ) :
+		ob_start();
+		?>
+		<style>
+
+
+			.home footer.entry-footer, .single-download footer.entry-footer {
+				display: none;
+			}
+
+			button#rest-bundle-button {
+				width: 100%;
+				text-align: center;
+				color: white;
+			}
+
+			#rest-bundle-button a {
+				color: white;
+
+			}
+
+			@media screen and (min-width: 61.5625em) {
+				.home .entry-content, .single-download .entry-content {
+					float: left !important;
+					margin-right: -100% !important;
+					margin-left: 20% !important;
+					width: 60.00000001% !important;
+				}
+				.single-download .entry-content {
+					width: 71.42857144% !important;
+				}
+			}
+
+			@media screen and (max-width: 61.5625em) {
+				.site-header-main {
+					background: #fff !important;
+					background-image: none !important;
+				}
+
+				.site-header-main .menu-main-container li.menu-item a:hover, .menu-main-container li.menu-item a:active {
+					color: #fff;
+					background: #000;
+					padding-left: 2px;
+				}
+
+				.site-header-main .menu-main-container li.menu-item a:hover, .menu-main-container li.menu-item {
+					padding-left: 2px;
+				}
+			}
+
+			.home h2.title, .postid-9 h2.title {
+				color: #000;
+				text-align: center;
+			}
+
+
+			.home header h2.entry-title {
+				display: none;
+				visibility: hidden;
+			}
+
+
+			.product-price a {
+				color: #FFF;
+				text-align: center;
+			}
+
+			.product-price button {
+				text-align: center;
+				width: 100%;
+				margin-bottom: 24px;
+			}
+			.site-header {
+				padding-bottom: 0;
+			}
+
+		</style>
+		<?php
+		$styles = ob_get_clean();
+		set_transient( $key, $styles, DAY_IN_SECONDS );
+	endif;
+	echo $styles;
+});
+
+
+/**
+ * Make bundle the front-page
+ */
+add_action( 'pre_get_posts', function ( $query ) {
+	if ( ! is_admin() && $query->is_home() && $query->is_main_query() ) {
+		$query->set( 'post_type','download' );
+		$query->set( 'post__in', [9] );
+
+	}
+});
+
