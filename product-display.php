@@ -87,7 +87,9 @@ function ljp_add_to_cart_button( $id = null, $extra_wrap = false ){
 	}
 	$add_to_cart = add_query_arg( 'edd_action', 'add_to_cart', home_url( 'checkout' ) );
 
-	$html =  sprintf( '<button><a href="%s" title="Buy This Part of The Course">%s</a></button>', esc_url( add_query_arg( 'download_id', $id, $add_to_cart ) ), 'Buy Now: $30' );
+	$price = edd_get_download_price( $id );
+	$price = 'Buy Now: $' . $price;
+	$html =  sprintf( '<button><a href="%s" title="Buy This Part of The Course">%s</a></button>', esc_url( add_query_arg( 'download_id', $id, $add_to_cart ) ), $price );
 	if( $extra_wrap ){
 		$html = sprintf( '<div class="product-price">%s</div>', $html );
 	}
@@ -105,7 +107,7 @@ function ljp_add_to_cart_button( $id = null, $extra_wrap = false ){
  */
 function ljp( $display ) {
 
-	$key = md5(( __FUNCTION__ . $display ) );
+	$key = md5( ( __FUNCTION__ . $display ) );
 	if( ! WP_DEBUG && false == ( $view = get_transient( $key ) ) ) {
 		ob_start();
 		include( dirname( __FILE__ ) . '/views/'. $display . '.php' );
