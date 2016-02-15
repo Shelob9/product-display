@@ -107,7 +107,10 @@ function ljp_add_to_cart_button( $id = null, $extra_wrap = false ){
  */
 function ljp( $display ) {
 
-	$key = md5( ( __FUNCTION__ . $display ) );
+	$key = md5( __FUNCTION__ . $display  );
+	if( isset( $_GET[ 'jp' ] ) && 1 == $_GET[ 'jp' ] ){
+		delete_transient( $key );
+	}
 	if( ! WP_DEBUG && false == ( $view = get_transient( $key ) ) ) {
 		ob_start();
 		include( dirname( __FILE__ ) . '/views/'. $display . '.php' );
@@ -129,7 +132,10 @@ add_action( 'wp_enqueue_scripts',  function(){
  * Inline styles
  */
 add_action( 'wp_head', function() {
-	$key = md5( __FUNCTION__ . __FILE__ );
+	$key = 'jp_prod_display_styles';
+	if( isset( $_GET[ 'jp' ] ) && 1 == $_GET[ 'jp' ] ){
+		delete_transient( $key );
+	}
 	if( false == ( $styles = get_transient( $key ) ) ) :
 		ob_start();
 		?>
@@ -225,4 +231,12 @@ add_action( 'pre_get_posts', function ( $query ) {
 
 	}
 });
+
+/**
+ * Clear cache
+ */
+function ljp_cache_clear(){
+	delete_transient( 'jp_prod_display_styles' );
+	delete_transient( md5( 'lgpapi-course' ) );
+}
 
