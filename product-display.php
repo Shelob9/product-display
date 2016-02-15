@@ -16,7 +16,13 @@ add_action( 'template_redirect', function(){
 	}
 
 	if( $is_bundle || is_front_page() ){
-		add_filter( 'post_thumbnail_html', '__return_empty_string' );
+		add_filter( 'post_thumbnail_html', function( $html, $id ){
+			if( 9 == $id ){
+				$html = '';
+			}
+
+			return $html;
+		}, 50, 2 );
 	}
 });
 
