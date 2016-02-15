@@ -129,7 +129,7 @@ add_action( 'wp_enqueue_scripts',  function(){
 });
 
 /**
- * Inline styles
+ * Inline styles/ analytics
  */
 add_action( 'wp_head', function() {
 	$key = 'jp_prod_display_styles';
@@ -213,6 +213,16 @@ add_action( 'wp_head', function() {
 			}
 
 		</style>
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-73817414-1', 'auto');
+			ga('send', 'pageview');
+
+		</script>
 		<?php
 		$styles = ob_get_clean();
 		set_transient( $key, $styles, DAY_IN_SECONDS );
@@ -239,19 +249,3 @@ function ljp_cache_clear(){
 	delete_transient( 'jp_prod_display_styles' );
 	delete_transient( md5( 'lgpapi-course' ) );
 }
-
-/**
- * Google Analytics
- */
- add_action( 'wp_header', function(){?>
-<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	ga('create', 'UA-73817414-1', 'auto');
-	ga('send', 'pageview');
-
-</script>
- <?php});
