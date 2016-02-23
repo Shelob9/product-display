@@ -40,11 +40,13 @@ add_action( 'edd_after_download_content', function(){
 			//echo ljp_rest_course_bundle();
 		}
 
-		echo edd_stream_shortcode_handler( [
-			'id' => $post->ID,
-			'show_login' => true,
-			'login_message' => 'If you have purchased this section of the course, login to view'
-		]);
+		if ( function_exists( 'edd_stream_shortcode_handler' ) ) {
+			echo edd_stream_shortcode_handler( [
+				'id'            => $post->ID,
+				'show_login'    => true,
+				'login_message' => 'If you have purchased this section of the course, login to view'
+			] );
+		}
 	}
 
 } );
