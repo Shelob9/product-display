@@ -258,3 +258,16 @@ function ljp_cache_clear(){
 	delete_transient( 'jp_prod_display_styles' );
 	delete_transient( md5( 'lgpapi-course' ) );
 }
+
+/**
+ * Allow bundle purchasers to view course parts
+ */
+add_filter( 'edd_stream_user_has_id', function( $id ) {
+	$ids = [ 13, 12, 11, 10 ];
+	if( $id == 9 || ( is_numeric( $id ) && in_array( (int) $id, $ids  ) ) ){
+		$ids[] = 9;
+		$id = $ids;
+	}
+
+	return $id;
+});
