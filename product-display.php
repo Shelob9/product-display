@@ -24,10 +24,11 @@ add_action( 'template_redirect', function(){
 			return $html;
 		}, 50, 2 );
 	}
+
 });
 
 /**
- * Replace add to cart button
+ * Replace add to cart button & add video content
  */
 remove_action( 'edd_after_download_content', 'edd_append_purchase_link' );
 add_action( 'edd_after_download_content', function(){
@@ -38,6 +39,12 @@ add_action( 'edd_after_download_content', function(){
 		}elseif( 9 == $post->ID ){
 			//echo ljp_rest_course_bundle();
 		}
+
+		echo edd_stream_shortcode_handler( [
+			'id' => $post->ID,
+			'show_login' => true,
+			'login_message' => 'If you have purchased this section of the course, login to view'
+		]);
 	}
 
 } );
