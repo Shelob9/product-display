@@ -275,7 +275,7 @@ add_filter( 'edd_stream_user_has_id', function( $id ) {
 /**
  * Make all image URLs in srcset https
  */
-add_filter( 'wp_calculate_image_srcset', functioN( $sources ){
+add_filter( 'wp_calculate_image_srcset', function( $sources ){
 	if( ! empty( $sources ) ) {
 		foreach( $sources as $i => $source ){
 			$sources[ $i ][ 'url' ] = set_url_scheme( $sources[ $i ][ 'url' ], 'https' );
