@@ -272,5 +272,16 @@ add_filter( 'edd_stream_user_has_id', function( $id ) {
 	return $id;
 });
 
+/**
+ * Make all image URLs in srcset https
+ */
+add_filter( 'wp_calculate_image_srcset', functioN( $sources ){
+	if( ! empty( $sources ) ) {
+		foreach( $sources as $i => $source ){
+			$sources[ $i ][ 'url' ] = set_url_scheme( $sources[ $i ][ 'url' ], 'https' );
+		}
+	}
 
-add_filter( 'wp_get_attachment_url', 'set_url_scheme' );
+	return $sources;
+});
+
