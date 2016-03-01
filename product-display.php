@@ -271,3 +271,6 @@ add_filter( 'edd_stream_user_has_id', function( $id ) {
 
 	return $id;
 });
+
+
+add_filter( 'wp_get_attachment_url', 'set_url_scheme' );
