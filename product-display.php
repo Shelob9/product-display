@@ -61,7 +61,7 @@ function ljp_rest_course_bundle(){
 		'edd_action' => 'add_to_cart',
 		'download_id' => 9
 	), home_url( 'checkout' ) );
-	return sprintf( '<button id="rest-bundle-button"><a href="%s" title="Buy The Full Course">Buy All Four Parts & Save: $100</a></button>', $add_to_cart );
+	return sprintf( '<div id="rest-bundle-button" class="product-price"><a href="%s" title="Buy The Full Course">Buy All Four Parts & Save: $100</a></div>', $add_to_cart );
 }
 
 /**
@@ -98,7 +98,7 @@ function ljp_add_to_cart_button( $id = null, $extra_wrap = false ){
 
 	$price = edd_get_download_price( $id );
 	$price = 'Buy Now: $' . $price;
-	$html =  sprintf( '<button><a href="%s" title="Buy This Part of The Course">%s</a></button>', esc_url( add_query_arg( 'download_id', $id, $add_to_cart ) ), $price );
+	$html =  sprintf( '<a href="%s" title="Buy This Part of The Course">%s</a>', esc_url( add_query_arg( 'download_id', $id, $add_to_cart ) ), $price );
 	if( $extra_wrap ){
 		$html = sprintf( '<div class="product-price">%s</div>', $html );
 	}
@@ -207,18 +207,21 @@ add_action( 'wp_head', function() {
 			}
 
 
+			.site-header {
+				padding-bottom: 0;
+			}
+
 			.product-price a {
 				color: #FFF;
 				text-align: center;
-			}
-
-			.product-price button {
-				text-align: center;
+				background-color: black;
 				width: 100%;
+				text-align: center;
 				margin-bottom: 24px;
-			}
-			.site-header {
-				padding-bottom: 0;
+				padding: 12px;
+				display: inline-block;
+				text-transform: uppercase;
+				font-family: Merriweather,Georgia,serif;
 			}
 
 		</style>
